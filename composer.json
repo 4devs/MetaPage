@@ -1,0 +1,36 @@
+{
+    "name": "fdevs/meta-page",
+    "license": "MIT",
+    "type": "library",
+    "description": "library for working with page meta data",
+    "homepage": "https://github.com/4devs/MetaPage",
+    "keywords": [
+        "meta",
+        "page"
+    ],
+    "authors": [
+        {
+            "name": "Samusev Andrey",
+            "email": "andrey@4devs.org",
+            "homepage": "http://andrey.4devs.io/"
+        },
+        {
+            "name": "4devs Community",
+            "homepage": "https://github.com/4devs/MetaPage/contributors"
+        }
+    ],
+    "require-dev": {},
+    "require": {
+        "php": ">=5.4",
+        "doctrine/collections": "~1.2",
+        "doctrine/inflector": "~1.0"
+    },
+    "suggest": {
+        "symfony/form": "to use with form",
+        "fdevs/locale": "to use model doctrine mongodb",
+        "twig/twig": "use with twig"
+    },
+    "autoload": {
+        "psr-4": {"FDevs\\MetaPage\\": ""}
+    }
+}
