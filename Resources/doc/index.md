@@ -1,17 +1,17 @@
-Getting Started With Locale Library
-===================================
+Getting Started With Meta Page Library
+======================================
 
 ## Installation and usage
 
 Installation and usage is a quick:
 
-1. Download Locale using composer
+1. Download library using composer
 2. Use the library
 
 
-### Step 1: Download Locale library using composer
+### Step 1: Download library using composer
 
-Add Locale library in your composer.json:
+Add library in your composer.json:
 
 ```json
 {
@@ -21,13 +21,13 @@ Add Locale library in your composer.json:
 }
 ```
 
-Now tell composer to download the bundle by running the command:
+Now tell composer to download the library by running the command:
 
 ``` bash
 $ php composer.phar update fdevs/meta-page
 ```
 
-Composer will install the bundle to your project's `vendor/fdevs` directory.
+Composer will install the library to your project's `vendor/fdevs` directory.
 
 
 ### Step 2: Use the library
@@ -81,7 +81,7 @@ create page model
 ```php
 <?php
 
-namespace FDevs\PageBundle\Model;
+namespace AppBundle\Model;
 
 use FDevs\MetaPage\MetaInterface;
 use FDevs\MetaPage\Model\MetaData;
