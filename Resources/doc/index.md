@@ -42,13 +42,13 @@ require DIR . '/../vendor/autoload.php';
 use FDevs\MetaPage\Model\MetaConfig;
 
 // The same text in different languages
-$description = new MetaConfig('name', 'description', '4Devs Company');
+$description = MetaConfig::create('name', 'description', '4Devs Company');
 $description->setFormType('textarea');//if use symfony form
 
-$ogTitle = new MetaConfig('property', 'og:title', '4Devs Company');
+$ogTitle = MetaConfig::create('property', 'og:title', '4Devs Company');
 $ogTitle->setFormType('text');//if use symfony form
 
-$ogType = new MetaConfig('property', 'og:type', 'website');
+$ogType = MetaConfig::create('property', 'og:type', 'website');
 
 $siteConfig = [$description, $ogTitle, $ogType];
 
@@ -90,7 +90,7 @@ class Page implements MetaInterface
 {
     public function getMetaData()
     {
-        return [new MetaData('name', 'description', 'best page')];
+        return [MetaConfig::create('name', 'description', 'best page')];
     }
     
     public function getTitle()
@@ -113,13 +113,13 @@ modify base config
 use FDevs\MetaPage\Model\MetaConfig;
 
 // The same text in different languages
-$description = new MetaConfig('name', 'description', '4Devs Company');
+$description = MetaConfig::create('name', 'description', '4Devs Company');
 $description->setFormType('textarea');//if use symfony form
 
-$ogTitle = new MetaConfig('property', 'og:title', '4Devs Company');
+$ogTitle = MetaConfig::create('property', 'og:title', '4Devs Company');
 $ogTitle->setVariable('title');
 
-$ogType = new MetaConfig('property', 'og:type', 'website');
+$ogType = MetaConfig::create('property', 'og:type', 'website');
 
 $siteConfig = [$description, $ogTitle, $ogType];
 ```

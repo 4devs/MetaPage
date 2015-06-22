@@ -17,17 +17,22 @@ class MetaData
     protected $content;
 
     /**
-     * init.
+     * create.
      *
-     * @param string $type
-     * @param string $name
-     * @param string $content
+     * @param string                               $type
+     * @param string                               $name
+     * @param array|Collection|LocaleText[]|string $content
+     *
+     * @return MetaData
      */
-    public function __construct($type, $name, $content)
+    public static function create($type, $name, $content)
     {
-        $this->type = $type;
-        $this->name = $name;
-        $this->content = $content;
+        $meta = new static();
+        $meta->setType($type);
+        $meta->setName($name);
+        $meta->setContent($content);
+
+        return $meta;
     }
 
     /**
