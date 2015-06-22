@@ -23,7 +23,7 @@ class MetaData
      * @param string $name
      * @param string $content
      */
-    public function __construct($type, $name, $content)
+    public function __construct($type = '', $name = '', $content = '')
     {
         $this->type = $type;
         $this->name = $name;
