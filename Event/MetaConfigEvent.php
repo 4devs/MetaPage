@@ -2,7 +2,6 @@
 
 namespace FDevs\MetaPage\Event;
 
-
 use FDevs\MetaPage\Model\MetaConfig;
 use FDevs\MetaPage\Model\MetaConfigInterface;
 use Symfony\Component\EventDispatcher\Event;

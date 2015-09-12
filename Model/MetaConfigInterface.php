@@ -2,7 +2,6 @@
 
 namespace FDevs\MetaPage\Model;
 
-
 interface MetaConfigInterface extends MetaDataInterface
 {
     const CONTENT_TYPE_ARRAY = 'array';

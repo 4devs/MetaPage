@@ -2,7 +2,6 @@
 
 namespace FDevs\MetaPage\Exception;
 
-
 class DuplicateMetaConfigException extends Exception
 {
     /**

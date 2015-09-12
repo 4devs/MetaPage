@@ -2,7 +2,6 @@
 
 namespace FDevs\MetaPage;
 
-
 final class MetaPageEvents
 {
     /**

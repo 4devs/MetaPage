@@ -2,7 +2,6 @@
 
 namespace FDevs\MetaPage\Manager;
 
-
 use FDevs\MetaPage\Event\MetaConfigEvent;
 use FDevs\MetaPage\MetaPageEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -23,7 +22,7 @@ class MetaManager
     /**
      * MetaManager constructor.
      *
-     * @param string                        $class full class identifier that implements `FDevs\MetaPage\Model\MetaConfigInterface`
+     * @param string                        $class      full class identifier that implements `FDevs\MetaPage\Model\MetaConfigInterface`
      * @param EventDispatcherInterface|null $dispatcher
      */
     public function __construct($class, EventDispatcherInterface $dispatcher = null)

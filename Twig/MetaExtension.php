@@ -4,7 +4,6 @@ namespace FDevs\MetaPage\Twig;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Inflector\Inflector;
 use FDevs\MetaPage\Manager\MetaRegistry;
 use FDevs\MetaPage\MetaInterface;
 use FDevs\MetaPage\Model\MetaConfig;
