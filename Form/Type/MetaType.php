@@ -2,44 +2,24 @@
 
 namespace FDevs\MetaPage\Form\Type;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use FDevs\MetaPage\Form\EventListener\MetaFormSubscriber;
-use FDevs\MetaPage\Model\MetaConfig;
+use FDevs\MetaPage\Manager\MetaRegistry;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class MetaType extends AbstractType
 {
-    /** @var ArrayCollection */
-    private $metaList;
+    /** @var MetaRegistry */
+    private $registry;
 
     /**
-     * init
+     * MetaType constructor.
      *
-     * @param array|MetaConfig[] $metaList
+     * @param MetaRegistry $registry
      */
-    public function __construct(array $metaList = [])
+    public function __construct(MetaRegistry $registry)
     {
-        $this->metaList = new ArrayCollection();
-        foreach ($metaList as $meta) {
-            $this->addMetaConfig($meta);
-        }
-    }
-
-    /**
-     * add meta config
-     *
-     * @param MetaConfig $config
-     *
-     * @return $this
-     */
-    public function addMetaConfig(MetaConfig $config)
-    {
-        if ($config->getFormType()) {
-            $this->metaList->add($config);
-        }
-
-        return $this;
+        $this->registry = $registry;
     }
 
     /**
@@ -47,7 +27,7 @@ class MetaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventSubscriber(new MetaFormSubscriber($this->metaList, 'fdevs_meta_data'));
+        $builder->addEventSubscriber(new MetaFormSubscriber($this->registry, 'fdevs_meta_data'));
     }
 
     /**

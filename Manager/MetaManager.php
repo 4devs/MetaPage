@@ -87,7 +87,7 @@ class MetaManager
             ])
             ->setAllowedTypes('rendered', 'bool')
             ->setAllowedTypes('filters', 'string')
-            ->setAllowedTypes('form_type', 'string')
+            ->setAllowedTypes('form_type', ['string', '\\Symfony\\Component\\Form\\FormTypeInterface'])
             ->setAllowedTypes('variable', 'string')
             ->setAllowedTypes('content', ['string', 'Doctrine\\Common\\Collections\\Collection', 'array'])
             ->setRequired(['type', 'name'])

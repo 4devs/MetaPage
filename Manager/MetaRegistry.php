@@ -87,6 +87,16 @@ class MetaRegistry implements \Countable, \IteratorAggregate, \ArrayAccess
     }
 
     /**
+     * @param \Closure $p
+     *
+     * @return array
+     */
+    public function filter(\Closure $p)
+    {
+        return array_filter($this->metaList, $p);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getIterator()
