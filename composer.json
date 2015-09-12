@@ -27,10 +27,14 @@
     },
     "suggest": {
         "symfony/form": "to use with form",
+        "symfony/property-access": "use use with twig extension",
+        "symfony/event-dispatcher ": "to use meta manager",
         "fdevs/locale": "to use model doctrine mongodb",
         "twig/twig": "use with twig"
     },
     "autoload": {
-        "psr-4": {"FDevs\\MetaPage\\": ""}
+        "psr-4": {
+            "FDevs\\MetaPage\\": ""
+        }
     }
 }

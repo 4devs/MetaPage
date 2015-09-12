@@ -5,7 +5,7 @@ namespace FDevs\MetaPage\Model;
 use Doctrine\Common\Collections\Collection;
 use FDevs\Locale\Model\LocaleText;
 
-class MetaData
+class MetaData implements MetaDataInterface
 {
     /** @var string */
     protected $type;
@@ -31,9 +31,7 @@ class MetaData
     }
 
     /**
-     * get type
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getType()
     {
@@ -41,11 +39,7 @@ class MetaData
     }
 
     /**
-     * set type
-     *
-     * @param string $type
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function setType($type)
     {
@@ -55,9 +49,7 @@ class MetaData
     }
 
     /**
-     * get name
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getName()
     {
@@ -65,11 +57,7 @@ class MetaData
     }
 
     /**
-     * set name
-     *
-     * @param string $name
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function setName($name)
     {
@@ -79,9 +67,7 @@ class MetaData
     }
 
     /**
-     * get content
-     *
-     * @return array|Collection|LocaleText[]
+     * {@inheritDoc}
      */
     public function getContent()
     {
@@ -89,14 +75,12 @@ class MetaData
     }
 
     /**
-     * set content
-     *
-     * @param array|Collection|LocaleText[]|string $content
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 }

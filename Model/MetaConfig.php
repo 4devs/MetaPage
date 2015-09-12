@@ -2,7 +2,7 @@
 
 namespace FDevs\MetaPage\Model;
 
-class MetaConfig extends MetaData
+class MetaConfig extends MetaData implements MetaConfigInterface
 {
     /** @var string */
     protected $variable;
@@ -13,11 +13,14 @@ class MetaConfig extends MetaData
     /** @var string */
     protected $filters;
 
+    /** @var string */
+    protected $contentType = self::CONTENT_TYPE_STRING;
+
     /** @var bool */
     protected $rendered = false;
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getVariable()
     {
@@ -25,9 +28,7 @@ class MetaConfig extends MetaData
     }
 
     /**
-     * @param string $variable
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function setVariable($variable)
     {
@@ -37,7 +38,7 @@ class MetaConfig extends MetaData
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getFormType()
     {
@@ -45,9 +46,7 @@ class MetaConfig extends MetaData
     }
 
     /**
-     * @param string $formType
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function setFormType($formType)
     {
@@ -57,7 +56,7 @@ class MetaConfig extends MetaData
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getFilters()
     {
@@ -65,9 +64,7 @@ class MetaConfig extends MetaData
     }
 
     /**
-     * @param string $filters
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function setFilters($filters)
     {
@@ -77,9 +74,7 @@ class MetaConfig extends MetaData
     }
 
     /**
-     * is rendered
-     *
-     * @return boolean
+     * {@inheritDoc}
      */
     public function isRendered()
     {
@@ -87,17 +82,29 @@ class MetaConfig extends MetaData
     }
 
     /**
-     */
-    /**
-     * set rendered
-     *
-     * @param boolean $rendered
-     *
-     * @return $this
+     * {@inheritDoc}
      */
     public function setRendered($rendered)
     {
         $this->rendered = $rendered;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
 
         return $this;
     }
