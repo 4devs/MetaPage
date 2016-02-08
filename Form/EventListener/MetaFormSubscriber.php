@@ -22,10 +22,10 @@ class MetaFormSubscriber implements EventSubscriberInterface
     /**
      * init
      *
-     * @param Collection          $metaList
+     * @param \Traversable        $metaList
      * @param string|AbstractType $formType
      */
-    public function __construct(Collection $metaList, $formType)
+    public function __construct(\Traversable $metaList, $formType)
     {
         $this->metaList = $metaList;
         $this->formType = $formType;
@@ -59,9 +59,12 @@ class MetaFormSubscriber implements EventSubscriberInterface
         foreach ($form as $name => $child) {
             $form->remove($name);
         }
-
-        foreach ($this->metaList as $key => $value) {
-            $this->addForm($form, $key, $value);
+        $metaList = $this->metaList->filter(function (MetaConfig $config) {
+            return $config->getFormType();
+        });
+        $i = 0;
+        foreach ($metaList as $key => $value) {
+            $this->addForm($form, $i++, $value);
         }
     }
 

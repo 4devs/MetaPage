@@ -4,10 +4,12 @@ namespace FDevs\MetaPage\Twig;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Inflector\Inflector;
+use FDevs\MetaPage\Manager\MetaRegistry;
 use FDevs\MetaPage\MetaInterface;
 use FDevs\MetaPage\Model\MetaConfig;
+use FDevs\MetaPage\Model\MetaConfigInterface;
 use FDevs\MetaPage\Model\MetaData;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class MetaExtension extends \Twig_Extension
 {
@@ -20,31 +22,20 @@ class MetaExtension extends \Twig_Extension
     /** @var array */
     private $templates = [];
 
-    /**
-     * init
-     *
-     * @param array $metaConfig
-     */
-    public function __construct(array $metaConfig = [])
-    {
-        $this->config = new ArrayCollection();
-        foreach ($metaConfig as $config) {
-            $this->addConfig($config);
-        }
-    }
+    /** @var PropertyAccess */
+    private $accessor;
+
+    /** @var  MetaRegistry */
+    private $registry;
 
     /**
-     * add config
+     * MetaExtension constructor.
      *
-     * @param MetaConfig $config
-     *
-     * @return $this
+     * @param MetaRegistry $registry
      */
-    public function addConfig(MetaConfig $config)
+    public function __construct(MetaRegistry $registry)
     {
-        $this->config->add($config);
-
-        return $this;
+        $this->registry = $registry;
     }
 
     /**
@@ -76,10 +67,19 @@ class MetaExtension extends \Twig_Extension
     public function metaFunction(\Twig_Environment $env, MetaInterface $page = null)
     {
         $meta = '';
-        foreach ($this->config as $config) {
+        foreach ($this->registry as $config) {
             if (!$config->isRendered()) {
                 $data = $this->getMeta($config, $page);
-                $meta .= $this->getTemplate($env, $config)->render(['meta' => $data]);
+                if ($data->getContent() !== null) {
+                    if ($data->getContentType() === MetaConfigInterface::CONTENT_TYPE_ARRAY) {
+                        foreach ($data->getContent() as $content) {
+                            $new = clone $data;
+                            $meta .= $this->getTemplate($env, $config)->render(['meta' => $new->setContent($content)]);
+                        }
+                    } else {
+                        $meta .= $this->getTemplate($env, $config)->render(['meta' => $data]);
+                    }
+                }
                 $config->setRendered(true);
             }
         }
@@ -114,8 +114,9 @@ class MetaExtension extends \Twig_Extension
     private function getMeta(MetaConfig $meta, MetaInterface $page = null)
     {
         if ($page) {
+            $content = null;
             if ($variable = $meta->getVariable()) {
-                $meta->setContent($this->getObjectFieldValue($page, $variable));
+                $content = $this->getObjectFieldValue($page, $variable);
             } else {
                 $metaData = $page->getMetaData();
                 if (is_array($metaData)) {
@@ -125,8 +126,12 @@ class MetaExtension extends \Twig_Extension
                     return $data->getType() == $meta->getType() && $data->getName() == $meta->getName();
                 });
                 if ($pageData->count()) {
-                    $meta->setContent($pageData->first()->getContent());
+                    $content = $pageData->first()->getContent();
                 }
+            }
+
+            if ($content) {
+                $meta->setContent($content);
             }
         }
 
@@ -134,9 +139,7 @@ class MetaExtension extends \Twig_Extension
     }
 
     /**
-     * Accesses the field of a given object. This field has to be public
-     * directly or indirectly (through an accessor get*, is*, or a magic
-     * method, __get, __call).
+     *  Returns the value at the end of the property path of the object graph.
      *
      * @param object $object
      * @param string $field
@@ -145,29 +148,10 @@ class MetaExtension extends \Twig_Extension
      */
     private function getObjectFieldValue($object, $field)
     {
-        if (is_array($object) || $object instanceof \ArrayAccess) {
-            return $object[$field];
+        if (!$this->accessor) {
+            $this->accessor = PropertyAccess::createPropertyAccessor();
         }
 
-        $accessors = ['get', 'is'];
-
-        foreach ($accessors as $accessor) {
-            $accessor .= Inflector::camelize($field);
-
-            if (!method_exists($object, $accessor)) {
-                continue;
-            }
-
-            return $object->$accessor();
-        }
-
-        // __call should be triggered for get.
-        $accessor = $accessors[0].Inflector::camelize($field);
-
-        if (method_exists($object, '__call')) {
-            return $object->$accessor();
-        }
-
-        return $object->$field;
+        return $this->accessor->getValue($object, $field);
     }
 }
