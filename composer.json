@@ -3,7 +3,7 @@
     "license": "MIT",
     "type": "library",
     "description": "library for working with page meta data",
-    "homepage": "https://github.com/4devs/MetaPage",
+    "homepage": "https://github.com/4devs/meta-page",
     "keywords": [
         "meta",
         "page"
@@ -16,21 +16,16 @@
         },
         {
             "name": "4devs Community",
-            "homepage": "https://github.com/4devs/MetaPage/contributors"
+            "homepage": "https://github.com/4devs/meta-page/contributors"
         }
     ],
     "require-dev": {},
     "require": {
-        "php": ">=5.4",
-        "doctrine/collections": "~1.2",
-        "doctrine/inflector": "~1.0"
+        "php": ">=5.5",
+        "doctrine/collections": "~1.2"
     },
     "suggest": {
-        "symfony/form": "to use with form",
-        "symfony/property-access": "use use with twig extension",
-        "symfony/event-dispatcher ": "to use meta manager",
-        "fdevs/locale": "to use model doctrine mongodb",
-        "twig/twig": "use with twig"
+        "fdevs/meta-page": "use with different library"
     },
     "autoload": {
         "psr-4": {

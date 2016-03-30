@@ -2,13 +2,33 @@
 
 namespace FDevs\MetaPage;
 
-use Doctrine\Common\Collections\Collection;
-use FDevs\MetaPage\Model\MetaData;
-
 interface MetaInterface
 {
     /**
-     * @return array|Collection|MetaData[]
+     * get type.
+     *
+     * @return string
      */
-    public function getMetaData();
+    public function getMetaType();
+
+    /**
+     * set type.
+     *
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setMetaType($type);
+
+    /**
+     * @param MetaInterface $meta
+     *
+     * @return self
+     */
+    public function addChild(MetaInterface $meta);
+
+    /**
+     * @return MetaInterface[]
+     */
+    public function getChildren();
 }
