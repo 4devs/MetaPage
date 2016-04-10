@@ -2,69 +2,50 @@
 
 namespace FDevs\MetaPage\Renderer;
 
+use FDevs\MetaPage\Exception\NotFoundRendererTypeException;
+use FDevs\MetaPage\Renderer\Type\BaseRenderer;
+use FDevs\MetaPage\Renderer\Type\ListRenderer;
 use FDevs\MetaPage\Model\MetaView;
 
 class PhpRenderer implements RendererInterface
 {
     /**
-     * @var string
+     * @var array|RendererInterface[]
      */
-    private $baseMetaTpl = '<meta %s="%s" content="%s"/>';
+    private $typeList = [];
+
+    /**
+     * PhpRenderer constructor.
+     */
+    public function __construct()
+    {
+        $this->typeList['base'] = new BaseRenderer();
+        $this->typeList['list'] = new ListRenderer();
+    }
+
+    /**
+     * @param string            $type
+     * @param RendererInterface $renderer
+     *
+     * @return $this
+     */
+    public function setTypeRenderer($type, RendererInterface $renderer)
+    {
+        $this->typeList[$type] = $renderer;
+
+        return $this;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function render(MetaView $metaView, array $options = [])
     {
-        $method = $metaView->getType().'Meta';
-        $method = method_exists($this, $method) ? $method : 'baseMeta';
-
-        return $this->$method($metaView);
-    }
-
-    /**
-     * @param string $baseMetaTpl
-     *
-     * @return PhpRenderer
-     */
-    public function setBaseMetaTpl($baseMetaTpl)
-    {
-        $this->baseMetaTpl = $baseMetaTpl;
-
-        return $this;
-    }
-
-    /**
-     * @param MetaView $metaView
-     *
-     * @return string
-     */
-    protected function baseMeta(MetaView $metaView)
-    {
-        $meta = '';
-        if (!$metaView->isRendered()) {
-            $meta = sprintf($this->baseMetaTpl, $metaView->getType(), $metaView->getName(), $metaView->getContent());
-            foreach ($metaView as $view) {
-                $meta .= $this->baseMeta($view);
-            }
-            $metaView->setRendered(true);
+        $type = $metaView->getType();
+        if (!isset($this->typeList[$type])) {
+            throw new NotFoundRendererTypeException($type);
         }
 
-        return $meta;
-    }
-
-    /**
-     * @param MetaView $metaView
-     *
-     * @return string
-     */
-    protected function listMeta(MetaView $metaView)
-    {
-        $meta = '';
-        foreach ($metaView as $item) {
-            $meta .= $this->baseMeta($item);
-        }
-
-        return $meta;
+        return $this->typeList[$type]->render($metaView, $options);
     }
 }

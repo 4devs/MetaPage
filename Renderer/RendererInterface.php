@@ -2,6 +2,7 @@
 
 namespace FDevs\MetaPage\Renderer;
 
+use FDevs\MetaPage\Exception\RendererException;
 use FDevs\MetaPage\Model\MetaView;
 
 interface RendererInterface
@@ -11,6 +12,8 @@ interface RendererInterface
      * @param array    $options
      *
      * @return string
+     *
+     * @throws RendererException
      */
     public function render(MetaView $metaView, array $options = []);
 }
