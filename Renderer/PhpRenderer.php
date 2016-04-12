@@ -2,13 +2,13 @@
 
 namespace FDevs\MetaPage\Renderer;
 
-use FDevs\MetaPage\Exception\NotFoundRendererTypeException;
 use FDevs\MetaPage\Renderer\Type\BaseRenderer;
 use FDevs\MetaPage\Renderer\Type\ListRenderer;
 use FDevs\MetaPage\Model\MetaView;
 
 class PhpRenderer implements RendererInterface
 {
+    const DEFAULT_RENDERER = 'base';
     /**
      * @var array|RendererInterface[]
      */
@@ -19,7 +19,7 @@ class PhpRenderer implements RendererInterface
      */
     public function __construct()
     {
-        $this->typeList['base'] = new BaseRenderer();
+        $this->typeList[self::DEFAULT_RENDERER] = new BaseRenderer();
         $this->typeList['list'] = new ListRenderer();
     }
 
@@ -42,10 +42,8 @@ class PhpRenderer implements RendererInterface
     public function render(MetaView $metaView, array $options = [])
     {
         $type = $metaView->getType();
-        if (!isset($this->typeList[$type])) {
-            throw new NotFoundRendererTypeException($type);
-        }
+        $renderer = isset($this->typeList[$type]) ? $this->typeList[$type] : $this->typeList[self::DEFAULT_RENDERER];
 
-        return $this->typeList[$type]->render($metaView, $options);
+        return $renderer->render($metaView, $options);
     }
 }
