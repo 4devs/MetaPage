@@ -19,6 +19,11 @@ class Meta implements MetaInterface
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $type;
+
+    /**
      * @var string|MetaInterface[]|Collection
      */
     protected $content;
@@ -31,13 +36,13 @@ class Meta implements MetaInterface
     /**
      * init.
      *
-     * @param string $type
+     * @param string $metaType
      * @param string $name
      * @param string $content
      */
-    public function __construct($type = '', $name = '', $content = '')
+    public function __construct($metaType = '', $name = '', $content = '')
     {
-        $this->metaType = $type;
+        $this->metaType = $metaType;
         $this->name = $name;
         $this->content = $content;
     }
@@ -74,6 +79,26 @@ class Meta implements MetaInterface
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Meta
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
 
         return $this;
     }

@@ -64,9 +64,7 @@ class MetaFactory
     public function createBuilder($type, array $options = [])
     {
         $metaType = $this->createType($type);
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver, $metaType);
-        $options = $resolver->resolve($options);
+        $options = $this->getOptions($metaType, $options);
 
         $dataClass = isset($options['data_class']) ? $options['data_class'] : Meta::class;
         $builder = new MetaBuilder($this, $dataClass);
@@ -88,6 +86,20 @@ class MetaFactory
     }
 
     /**
+     * @param MetaTypeInterface $metaType
+     * @param array             $options
+     *
+     * @return array
+     */
+    private function getOptions(MetaTypeInterface $metaType, array $options)
+    {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver, $metaType);
+
+        return $resolver->resolve($options);
+    }
+
+    /**
      * @param MetaView          $view
      * @param MetaInterface     $meta
      * @param MetaTypeInterface $metaType
@@ -101,7 +113,7 @@ class MetaFactory
         }
 
         $metaType->buildView($view, $meta, $options);
-        if ($viewType = $metaType->getViewType()) {
+        if (!$view->getType() && $viewType = $metaType->getViewType()) {
             $view->setType($viewType);
         }
     }
