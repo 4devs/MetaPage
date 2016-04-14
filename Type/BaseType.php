@@ -33,12 +33,14 @@ class BaseType extends AbstractType
     {
         $resolver
             ->setRequired(['name'])
-            ->setDefined(['data_class', 'content'])
+            ->setDefined(['data_class', 'content', 'type'])
             ->setAllowedTypes('data_class', 'string')
             ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('type', 'string')
             ->setDefaults([
                 'data_class' => Meta::class,
                 'content' => '',
+                'type' => '',
             ])
         ;
     }
@@ -54,6 +56,7 @@ class BaseType extends AbstractType
         $meta
             ->setContent($options['content'])
             ->setName($options['name'])
+            ->setType($options['type'])
         ;
     }
 
@@ -66,6 +69,7 @@ class BaseType extends AbstractType
         $view
             ->setName($meta->getName())
             ->setContent($meta->getContent())
+            ->setType($meta->getType())
             ->setRendered(false)
         ;
         foreach ($meta->getChildren() as $additional) {

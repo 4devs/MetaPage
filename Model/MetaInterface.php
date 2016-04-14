@@ -23,16 +23,32 @@ interface MetaInterface extends BaseMeta
     public function setName($name);
 
     /**
-     * get content.
+     * set type.
+     *
+     * @param string $type
+     *
+     * @return $this
+     */
+    public function setType($type);
+
+    /**
+     * get type.
      *
      * @return string
+     */
+    public function getType();
+
+    /**
+     * get content.
+     *
+     * @return mixed
      */
     public function getContent();
 
     /**
      * set content.
      *
-     * @param string $content
+     * @param mixed $content
      *
      * @return $this
      */
