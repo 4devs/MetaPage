@@ -27,14 +27,6 @@ class MetaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventSubscriber(new MetaFormSubscriber($this->registry, 'fdevs_meta_data'));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return 'fdevs_meta';
+        $builder->addEventSubscriber(new MetaFormSubscriber($this->registry, MetaDataType::class));
     }
 }

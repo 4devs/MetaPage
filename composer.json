@@ -19,7 +19,9 @@
             "homepage": "https://github.com/4devs/MetaPage/contributors"
         }
     ],
-    "require-dev": {},
+    "require-dev": {
+        "symfony/form": "~2.8|~3.0"
+    },
     "require": {
         "php": ">=5.4",
         "doctrine/collections": "~1.2",
